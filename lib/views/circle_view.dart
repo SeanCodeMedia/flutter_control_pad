@@ -18,6 +18,8 @@ class CircleView extends StatelessWidget {
 
   final String buttonText;
 
+  final Color button_text_color;
+
   CircleView({
     this.size,
     this.color = Colors.transparent,
@@ -27,6 +29,7 @@ class CircleView extends StatelessWidget {
     this.buttonImage,
     this.buttonIcon,
     this.buttonText,
+    this.button_text_color = Colors.white,
   });
 
   @override
@@ -39,7 +42,12 @@ class CircleView extends StatelessWidget {
             ? buttonIcon
             : (buttonImage != null)
                 ? buttonImage
-                : (buttonText != null) ? Text(buttonText) : null,
+                : (buttonText != null) ? Text(buttonText,
+                                             style: TextStyle(
+                                                    color: button_text_color,
+                                                     fontWeight:FontWeight.bold
+                                                 ),
+                                            ) : null,
       ),
       decoration: BoxDecoration(
         color: color,
@@ -94,7 +102,7 @@ class CircleView extends StatelessWidget {
         opacity: opacity,
         border: Border.all(
           color: borderColor,
-          width: 4.0,
+          width: 6.0,
           style: BorderStyle.solid,
         ),
         boxShadow: <BoxShadow>[
@@ -112,6 +120,8 @@ class CircleView extends StatelessWidget {
     Image image,
     Icon icon,
     String text,
+    Color BorderColor,
+    Color buttonText_color,
   ) =>
       CircleView(
         size: size,
@@ -120,8 +130,8 @@ class CircleView extends StatelessWidget {
         buttonIcon: icon,
         buttonText: text,
         border: Border.all(
-          color: Colors.black26,
-          width: 2.0,
+          color: BorderColor,
+          width: 6.0,
           style: BorderStyle.solid,
         ),
         boxShadow: <BoxShadow>[

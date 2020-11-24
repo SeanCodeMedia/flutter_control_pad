@@ -37,10 +37,10 @@ class PadButtonsView extends StatelessWidget {
   PadButtonsView({
     this.size,
     this.buttons = const [
-      PadButtonItem(index: 0, buttonText: "A"),
-      PadButtonItem(index: 1, buttonText: "B", pressedColor: Colors.red),
-      PadButtonItem(index: 2, buttonText: "C", pressedColor: Colors.green),
-      PadButtonItem(index: 3, buttonText: "D", pressedColor: Colors.yellow),
+      PadButtonItem(index: 0, buttonText: "A", borderColor: Colors.blue),
+      PadButtonItem(index: 1, buttonText: "B", borderColor: Colors.red, pressedColor: Colors.red),
+      PadButtonItem(index: 2, buttonText: "C", borderColor: Colors.green, pressedColor: Colors.green),
+      PadButtonItem(index: 3, buttonText: "D", borderColor: Colors.yellow, pressedColor: Colors.yellow),
     ],
     this.padButtonPressedCallback,
     this.buttonsPadding = 0,
@@ -77,12 +77,15 @@ class PadButtonsView extends StatelessWidget {
 
     for (var i = 0; i < buttons.length; i++) {
       var padButton = buttons[i];
-      list.add(createPositionedButtons(
+      list.add(
+          createPositionedButtons(
         padButton,
         actualSize,
         i,
         innerCircleSize,
-      ));
+      )
+      
+      );
     }
     return list;
   }
@@ -136,7 +139,11 @@ class PadButtonsView extends StatelessWidget {
                 buttonsStateMap[paddButton.index],
                 paddButton.buttonImage,
                 paddButton.buttonIcon,
-                paddButton.buttonText),
+                paddButton.buttonText,
+              // added color for border 
+               paddButton.borderColor,
+              paddButton.buttonText_color, 
+            ),
           ),
         );
       }),

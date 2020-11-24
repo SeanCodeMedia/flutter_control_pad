@@ -8,7 +8,13 @@ import 'circle_view.dart';
 typedef JoystickDirectionCallback = void Function(
     double degrees, double distance);
 
+Offset joystickInnerPosition = Offset(51, 51);
+Offset lastPosition = Offset(102.85714285714286, 102.85714285714286);
+
+
 class JoystickView extends StatelessWidget {
+
+  bool is_up = true;
   /// The size of the joystick.
   ///
   /// Defaults to half of the width in the portrait
@@ -57,6 +63,7 @@ class JoystickView extends StatelessWidget {
   /// Defaults to [true]
   final bool showArrows;
 
+
   JoystickView(
       {this.size,
       this.iconsColor = Colors.white54,
@@ -65,19 +72,20 @@ class JoystickView extends StatelessWidget {
       this.opacity,
       this.onDirectionChanged,
       this.interval,
-      this.showArrows = true});
+      this.showArrows = true,
+      }
+      );
+
 
   @override
   Widget build(BuildContext context) {
+
     double actualSize = size != null
         ? size
         : _math.min(MediaQuery.of(context).size.width,
-                MediaQuery.of(context).size.height) *
-            0.5;
+        MediaQuery.of(context).size.height) *
+        0.5;
     double innerCircleSize = actualSize / 2;
-    Offset lastPosition = Offset(innerCircleSize, innerCircleSize);
-    Offset joystickInnerPosition = _calculatePositionOfInnerCircle(
-        lastPosition, innerCircleSize, actualSize, Offset(0, 0));
 
     DateTime _callbackTimestamp;
 
@@ -102,35 +110,51 @@ class JoystickView extends StatelessWidget {
             ],
           );
 
+         // print(joystickInnerPosition.dx.toString() + " x, y " +
+            //  joystickInnerPosition.dy.toString());
+
           return GestureDetector(
             onPanStart: (details) {
+
               _callbackTimestamp = _processGesture(actualSize, actualSize / 2,
                   details.localPosition, _callbackTimestamp);
-              setState(() => lastPosition = details.localPosition);
+             setState(() => lastPosition = details.localPosition);
             },
             onPanEnd: (details) {
+
               _callbackTimestamp = null;
               if (onDirectionChanged != null) {
                 onDirectionChanged(0, 0);
               }
+
               joystickInnerPosition = _calculatePositionOfInnerCircle(
                   Offset(innerCircleSize, innerCircleSize),
                   innerCircleSize,
                   actualSize,
                   Offset(0, 0));
-              setState(() =>
-                  lastPosition = Offset(innerCircleSize, innerCircleSize));
+              setState(() => lastPosition = Offset(innerCircleSize, innerCircleSize));
+              setState(() => joystickInnerPosition = joystickInnerPosition);
+
+
+
             },
+
             onPanUpdate: (details) {
+
               _callbackTimestamp = _processGesture(actualSize, actualSize / 2,
                   details.localPosition, _callbackTimestamp);
+
               joystickInnerPosition = _calculatePositionOfInnerCircle(
                   lastPosition,
                   innerCircleSize,
                   actualSize,
                   details.localPosition);
 
+             // print(joystickInnerPosition);
+
+              setState(() => joystickInnerPosition = joystickInnerPosition);
               setState(() => lastPosition = details.localPosition);
+
             },
             child: (opacity != null)
                 ? Opacity(opacity: opacity, child: joystick)
@@ -200,11 +224,13 @@ class JoystickView extends StatelessWidget {
 
     double normalizedDistance = _math.min(distance / (size / 2), 1.0);
 
+    double normalizedAngle = angle - angle.floor(); 
+
     DateTime _callbackTimestamp = callbackTimestamp;
     if (onDirectionChanged != null &&
         _canCallOnDirectionChanged(callbackTimestamp)) {
       _callbackTimestamp = DateTime.now();
-      onDirectionChanged(degrees, normalizedDistance);
+      onDirectionChanged(normalizedAngle, normalizedDistance);
     }
 
     return _callbackTimestamp;
@@ -238,8 +264,10 @@ class JoystickView extends StatelessWidget {
     if (offset.dx < middle && offset.dy < middle) {
       degrees = 360 + degrees;
     }
+
     bool isStartPosition = lastPosition.dx == innerCircleSize &&
         lastPosition.dy == innerCircleSize;
+
     double lastAngleRadians =
         (isStartPosition) ? 0 : (degrees) * (_math.pi / 180.0);
 

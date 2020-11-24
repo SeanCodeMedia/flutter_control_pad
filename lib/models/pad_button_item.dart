@@ -17,6 +17,8 @@ class PadButtonItem {
   /// the button.
   final Image buttonImage;
 
+  final Color buttonText_color;
+
   /// [buttonIcon] optional parameter, image which will be displayed inside
   /// the button.
   final Icon buttonIcon;
@@ -27,6 +29,8 @@ class PadButtonItem {
   /// [pressedColor] color of button when it is pressed.
   final Color pressedColor;
 
+  final Color borderColor;// added this
+
   /// [supportedGestures] optional parameter, list of gestures for button which
   /// will call the callback [PadButtonsView.padButtonPressedCallback].
   ///
@@ -36,8 +40,10 @@ class PadButtonItem {
   const PadButtonItem({
     @required this.index,
     this.buttonText,
+    this.buttonText_color = Colors.white,
     this.buttonImage,
     this.buttonIcon,
+    this.borderColor = Colors.red,
     this.backgroundColor = Colors.white54,
     this.pressedColor = Colors.lightBlueAccent,
     this.supportedGestures = const [Gestures.TAP],
