@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
   }
 }
  
-// now you can customize boarder colors 
+// now you can customize button pad border colors 
  
  
  Expanded(
