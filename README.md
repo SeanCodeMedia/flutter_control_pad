@@ -23,12 +23,52 @@ class HomePage extends StatelessWidget {
       ),
       body: Container(
         color: Colors.white,
-        child: JoystickView(),
+        child: JoystickView(), 
       ),
     );
   }
 }
+ 
+ now you can customize boarder colors 
+ 
+ 
+ Expanded(
+            flex: 3,
+            child: PadButtonsView(buttons: [
+             
+                            PadButtonItem(index: 0,
+                            buttonText: "B",
+                            buttonText_color: Colors.white,
+                            backgroundColor: Colors.black,
+                            pressedColor: Colors.blue,
+                            borderColor:Colors.blue),
+                            
+                            PadButtonItem(index: 1,
+                            buttonText_color: Colors.white,
+                            buttonText: "A",
+                            borderColor:Colors.yellow,
+                            backgroundColor: Colors.black,
+                            pressedColor: Colors.yellow),
+                            
+                              PadButtonItem(index: 2,
+                              buttonText_color: Colors.white,
+                              buttonText:"X",
+                              backgroundColor: Colors.black,
+                              borderColor:Colors.green,
+                              pressedColor:Colors.green),
+                              
+                              PadButtonItem(index: 3,
+                              buttonText_color: Colors.white,
+                              buttonText: "Y",
+                              backgroundColor: Colors.black,
+                              borderColor:Colors.red,
+                              pressedColor:Colors.red)
+                              
+                            ) // Expanded 
+
 ```
+
+
 
 ## Questions or Feedback?
 
